@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>My MusicStore</title>
+        <link rel="stylesheet" href="/app/assets/css/styles.css">
+    </head>
+    <body>
+
+        <button id="get-albums">Get Albums</button>
+        <button id="get-first-albums">Get Album 1</button>
+        
+        
+        <input type="text" name="q" value="">
+
+        <script src="//cdn.jsdelivr.net/jquery/2.2.4/jquery.min.js"></script>
+        <script src="/app/assets/js/jquery.autocomplete.min.js"></script>
+        <script>
+            $(function(){
+                
+                $("input[name='q']").autocomplete({
+                    serviceUrl: '/search',
+                    paramName: 'q',
+                    onSelect: function (suggestion) {
+                        console.log('You selected: ' + suggestion.value + ', ' + suggestion.data);
+                    }
+                });
+                
+                $("#get-albums").on("click",function(e){
+                    e.preventDefault();
+
+                    $.ajax({
+                        url: "/albums",
+                        dataType:"json",
+                        method:"GET"
+                    }).done(function(response) {
+                        console.log(response);
+                    });
+                });
+                
+                $("#get-first-albums").on("click",function(e){
+                    e.preventDefault();
+
+                    $.ajax({
+                        url: "/album/1",
+                        dataType:"json",
+                        method:"GET"
+                    }).done(function(response) {
+                        console.log(response);
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>
